@@ -111,7 +111,7 @@ const config: Config = {
           items: [
             {
               label: 'Instagram',
-              href: 'https://www.instagram.com/venepagos/',
+              href: 'https://www.instagram.com/venepagos.ve/',
             },
             {
               label: 'X',
