@@ -12,8 +12,15 @@ Los webhooks de Venepagos te permiten recibir notificaciones en tiempo real sobr
 |--------|---------------|-------------|-----------------|
 | **Pago creado** | `payment.created` | Se ha iniciado un nuevo proceso de pago | Cuando un usuario accede a un enlace de pago y comienza el proceso |
 | **Pago completado** | `payment.completed` | Un pago se ha procesado exitosamente | Cuando el pago se confirma y se acredita en tu cuenta |
+| **Pago con reintento** | `payment.retry` | Indica que no debes cerrar el flujo; el usuario puede reintentar | Al cargar la pantalla de confirmación con error; si no hay acción en 5s se enviará `payment.failed` |
 | **Pago fallido** | `payment.failed` | Un pago ha fallado por algún motivo | Cuando hay un error en el procesamiento del pago |
 | **Pago cancelado** | `payment.cancelled` | Un pago ha sido cancelado por el usuario | Cuando el usuario cancela el proceso de pago |
+
+Notas sobre `payment.retry`:
+
+- Se emite una sola vez al cargar la pantalla de confirmación con error.
+- Si el usuario pulsa “Volver a intentar” antes de 5s, no se enviará `payment.failed`.
+- Si no hay acción en 5s, se enviará automáticamente `payment.failed`.
 
 #### Eventos de Enlaces de Pago
 

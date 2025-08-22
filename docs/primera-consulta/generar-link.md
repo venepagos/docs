@@ -36,9 +36,9 @@ Crea un archivo `.env` para almacenar la `BASE_URL` y `API_KEY` para manetener t
 
 El campo `metadata` es un objeto personalizable que te permite incluir datos adicionales que necesites para tu aplicación. Estos datos serán devueltos en las notificaciones de webhook, permitiéndote mantener el contexto de cada pago (por ejemplo: IDs de usuario, orden, producto, etc).
 
-El campo `amount` sebe ser el monto del cobro a realizar en moneda **USD** y Venepagos hará la conversión en Bolívares de manera automatica segun la tasa del Banco Central de Venezuela **(BCV)**.
+El campo `amount` debe ser el monto del cobro. Si `currency` es **USD**, Venepagos convertirá automáticamente a Bolívares según la tasa del Banco Central de Venezuela **(BCV)**. Si `currency` es **Bs**, se cobrará exactamente ese monto en Bolívares, sin consultar tasa.
 
-el campo `currency` siempre debe enviar `"USD"` como valor.
+El campo `currency` acepta `"USD"` o `"Bs"`. Usa `"Bs"` para cobrar un monto exacto en bolívares.
 
 #### Ejemplo de Request
 ```json
@@ -46,7 +46,7 @@ el campo `currency` siempre debe enviar `"USD"` como valor.
     "title": "Pago de prueba",
     "description": "Pago de producto X",
     "amount": 10.5,
-    "currency": "USD", // Por el momento obligatoriamente enviar como moneda "USD"
+    "currency": "Bs", // Enviar "Bs" para cobrar el monto exacto en bolívares (o "USD" para conversión BCV)
     "metadata": {
       "user_id": "123",
       "order_id": "456"
@@ -63,7 +63,7 @@ el campo `currency` siempre debe enviar `"USD"` como valor.
     "title": "Pago de prueba",
     "description": "Pago de producto X",
     "amount": 10.5,
-    "currency": "USD",
+    "currency": "Bs",
     "url": "https://venepagos.com.ve/pagar/c00000000000000ny",
     "isActive": true,
     "expiresAt": null,
@@ -169,7 +169,7 @@ curl -X POST "https://venepagos.com.ve/api/public/payment-links/create" \
     "title": "Pago de prueba",
     "description": "Pago de producto X",
     "amount": 10.5,
-    "currency": "USD",
+    "currency": "Bs",
     "metadata": {"user_id": "123", "order_id": "456"}
   }'
 ```
@@ -189,7 +189,7 @@ data = {
     "title": "Pago de prueba",
     "description": "Pago de producto X",
     "amount": 10.5,
-    "currency": "USD",
+    "currency": "Bs",
     "metadata": {"user_id": "123", "order_id": "456"}
 }
 response = requests.post(url, json=data, headers=headers)
@@ -210,7 +210,7 @@ fetch("https://venepagos.com.ve/api/public/payment-links/create", {
     title: "Pago de prueba",
     description: "Pago de producto X",
     amount: 10.5,
-    currency: "USD",
+    currency: "Bs",
     metadata: { user_id: "123", order_id: "456" }
   })
 })
@@ -230,7 +230,7 @@ axios.post(
     title: 'Pago de prueba',
     description: 'Pago de producto X',
     amount: 10.5,
-    currency: 'USD',
+    currency: 'Bs',
     metadata: { user_id: '123', order_id: '456' }
   },
   {
@@ -261,7 +261,7 @@ void main() async {
     'title': 'Pago de prueba',
     'description': 'Pago de producto X',
     'amount': 10.5,
-    'currency': 'USD',
+    'currency': 'Bs',
     'metadata': {'user_id': '123', 'order_id': '456'}
   });
 

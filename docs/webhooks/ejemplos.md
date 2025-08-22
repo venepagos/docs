@@ -58,6 +58,11 @@ app.post('/webhook', (req, res) => {
         // Aquí procesas el pago completado
         // Ejemplo: actualizar base de datos, enviar email, etc.
         break;
+      
+      case 'payment.retry':
+        console.log('Pago en reintento:', req.body.data);
+        // Mantén el flujo abierto; no marques como fallo definitivo aún
+        break;
         
       case 'payment.failed':
         console.log('Pago fallido:', req.body.data);
@@ -131,6 +136,10 @@ def webhook():
             # Aquí procesas el pago completado
             # Ejemplo: actualizar base de datos, enviar email, etc.
             
+        elif event == 'payment.retry':
+            print(f'Pago en reintento: {data}')
+            # Mantén el flujo abierto; no marques como fallo definitivo aún
+            
         elif event == 'payment.failed':
             print(f'Pago fallido: {data}')
             # Procesar pago fallido
@@ -191,6 +200,11 @@ switch ($event) {
         // Aquí procesas el pago completado
         // Ejemplo: actualizar base de datos, enviar email, etc.
         break;
+    
+    case 'payment.retry':
+        error_log("Pago en reintento: " . json_encode($eventData));
+        // Mantén el flujo abierto; no marques como fallo definitivo aún
+        break;
         
     case 'payment.failed':
         error_log("Pago fallido: " . json_encode($eventData));
@@ -250,6 +264,11 @@ public class WebhookController {
                     System.out.println("Pago completado: " + payload);
                     // Aquí procesas el pago completado
                     // Ejemplo: actualizar base de datos, enviar email, etc.
+                    break;
+                
+                case "payment.retry":
+                    System.out.println("Pago en reintento: " + payload);
+                    // Mantén el flujo abierto; no marques como fallo definitivo aún
                     break;
                     
                 case "payment.failed":
